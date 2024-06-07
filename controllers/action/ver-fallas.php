@@ -8,4 +8,7 @@ if (isset($_SESSION['ID_USUARIO'])) {
     echo json_encode($fallas_usuario);
 } else {
     echo json_encode(array('error' => 'No se ha iniciado sesión'));
+
 }
+
+
