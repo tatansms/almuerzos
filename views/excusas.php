@@ -130,45 +130,46 @@ if ($_SESSION["ID_USUARIO"] === null) {
     <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addExcuseModal">Agregar Excusa</button>
   </div>
             <!-- Modal -->
-      <div class="modal fade" id="addExcuseModal" tabindex="-1" aria-labelledby="addExcuseModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
+            <div class="modal fade" id="addExcuseModal" tabindex="-1" aria-labelledby="addExcuseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="addExcuseModalLabel">Agregar Excusa</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+                <h5 class="modal-title" id="addExcuseModalLabel">Agregar Excusa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-              <form id="addExcuseForm" method="POST" action="add_excuse.php">
-                <div class="form-group">
-                  <label for="convocatoria">Convocatoria</label>
-                  <select class="form-control" id="convocatoria" name="convocatoria" required>
-                    <option value="Convocatoria 2024-1 ESTUDIANTES PREGRADO PRESENCIAL">Convocatoria 2024-1 ESTUDIANTES PREGRADO PRESENCIAL</option>
-                    <!-- Puedes añadir más opciones aquí si es necesario -->
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="beneficio">Beneficio</label>
-                  <select class="form-control" id="beneficio" name="beneficio" required>
-                    <option value="Almuerzos">Almuerzos</option>
-                    <!-- Puedes añadir más opciones aquí si es necesario -->
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="descripcion">Descripción</label>
-                  <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
-                </div>
-                <div class="form-group">
-                  <label for="fecha">Fecha de excusa</label>
-                  <input type="date" class="form-control" id="fecha" name="fecha" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Guardar Excusa</button>
-              </form>
+                <form id="addExcuseForm">
+                    <div class="form-group">
+                        <label for="convocatoria">Convocatoria</label>
+                        <select class="form-control" id="convocatoria" name="convocatoria" required>
+                            <option value="Convocatoria 2024-1 ESTUDIANTES PREGRADO PRESENCIAL">Convocatoria 2024-1 ESTUDIANTES PREGRADO PRESENCIAL</option>
+                            <!-- Puedes añadir más opciones aquí si es necesario -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="beneficio">Beneficio</label>
+                        <select class="form-control" id="beneficio" name="beneficio" required>
+                            <option value="Almuerzos">Almuerzos</option>
+                            <!-- Puedes añadir más opciones aquí si es necesario -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion">Descripción</label>
+                        <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha">Fecha de excusa</label>
+                        <input type="date" class="form-control" id="fecha" name="fecha" required>
+                    </div>
+                    <button type="button" id="guardarExcusaBtn" class="btn btn-primary">Guardar Excusa</button>
+                </form>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
+</div>
+
 
       <!-- Agregar referencias a jQuery y Bootstrap JS -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>

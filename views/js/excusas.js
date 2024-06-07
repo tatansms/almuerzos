@@ -33,3 +33,49 @@ function insertarExcusasEnTabla(result) {
 
   $("#excusasRegistradas").append(excusas);
 }
+$(document).ready(function() {
+  $('#guardarExcusaBtn').on('click', function() {
+      var convocatoria = $('#convocatoria').val();
+      var descripcion = $('#descripcion').val();
+      var fecha = $('#fecha').val();
+var fechaSeleccionada = new Date(fecha);
+var idDia = fechaSeleccionada.getDay(); // Esto retorna 0 para Domingo, 1 para Lunes, etc.
+
+// Mapear los días de la semana según la base de datos (1 a 5)
+var diasBD = [1, 2, 3, 4, 5]; // Días en tu base de datos
+var diasSemana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]; // Correspondencia en JavaScript
+
+// Obtener el nombre del día según el valor en la base de datos
+var nombreDia = diasSemana[diasBD.indexOf(idDia + 1)]; // Sumar 1 a idDia porque getDay() retorna 0 para Domingo, 1 para Lunes, etc.
+
+
+      // Añadir console.log para verificar nombreDia
+      console.log("dia", idDia);
+
+      $.ajax({
+          type: "POST",
+          url: "/../../controllers/action/agregarExcusa.php",
+          data: {
+              convocatoria: convocatoria,
+              descripcion: descripcion,
+              fecha: fecha,
+              idDia: idDia,
+              nombreDia: nombreDia
+          },
+          success: function(response) {
+              var responseData = JSON.parse(response);
+              if (responseData.estado === true) {
+                  swal("Excusa agregada", responseData.msg, "success").then(function() {
+                      location.reload();
+                  });
+              } else {
+                  swal("Error", responseData.msg, "error");
+              }
+          },
+          error: function(xhr) {
+              console.error("Error en la solicitud AJAX", xhr.statusText);
+              swal("Error", "Hubo un problema al procesar la solicitud", "error");
+          }
+      });
+  });
+});

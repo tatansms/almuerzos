@@ -16,19 +16,18 @@ class ExcusaDAO {
             return array();
         }
 
-            foreach ($data_table as $indice => $valor) {
-                $excusa = new Excusa(
-                    $data_table[$indice]["ID_excusa"],
-                    $data_table[$indice]["convocatoria"],
-                    $data_table[$indice]["descripcion"],
-                    $data_table[$indice]["fecha"]
-                );
-                array_push($excusas, $excusa);
-            }
+        foreach ($data_table as $indice => $valor) {
+            $excusa = new Excusa(
+                $data_table[$indice]["ID_excusa"],
+                $data_table[$indice]["convocatoria"],
+                $data_table[$indice]["descripcion"],
+                $data_table[$indice]["fecha"]
+            );
+            array_push($excusas, $excusa);
+        }
 
-            $excusasArray = array();
-            foreach ($excusas as $excusa) {
-
+        $excusasArray = array();
+        foreach ($excusas as $excusa) {
             $excusaArray = array(
                 'ID_excusa' => $excusa->getID_excusa(),
                 'convocatoria' => $excusa->getConvocatoria(),
@@ -38,6 +37,40 @@ class ExcusaDAO {
             $excusasArray[] = $excusaArray;
         }
         return $excusasArray;
+    }
+
+    public function agregarNuevaExcusa($ID_user, $ID_dia, $descripcion, $fecha, $convocatoria) {
+        $data_source = new DataSource();
+        try {
+            $data_source->beginTransaction(); // Iniciar la transacción
+
+            // Paso 1: Insertar en la tabla principal
+            $sql = "INSERT INTO Excusa (descripcion, fecha, convocatoria) VALUES (:descripcion, :fecha, :convocatoria)";
+            $params = array(
+                ':descripcion' => $descripcion,
+                ':fecha' => $fecha,
+                ':convocatoria' => $convocatoria
+            );
+            $data_source->ejecutarActualizacion($sql, $params);
+            $ID_excusa = $data_source->lastInsertId(); // Obtener el ID de la última inserción
+
+            // Paso 2: Insertar en la tabla de relaciones
+            $sql = "INSERT INTO excusa_dia_almuerzo (ID_dia, ID_user, ID_excusa) VALUES (:ID_dia, :ID_user, :ID_excusa)";
+            $params = array(
+                ':ID_dia' => $ID_dia,
+                ':ID_user' => $ID_user,
+                ':ID_excusa' => $ID_excusa
+            );
+            $data_source->ejecutarActualizacion($sql, $params);
+
+            $data_source->commit(); // Confirmar la transacción
+            $data_source->closeConnection(); // Cerrar la conexión manualmente
+            return true;
+        } catch (Exception $e) {
+            $data_source->rollback(); // Revertir la transacción en caso de error
+            $data_source->closeConnection(); // Cerrar la conexión manualmente
+            throw $e;
+        }
     }
 }
 ?>
