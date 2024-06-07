@@ -2,18 +2,14 @@
 session_start();
 
 if ($_SESSION["ID_USUARIO"] === null) {
-  // Redirige a login.php después de 2 segundos
   echo '<script>
         setTimeout(function() {
             window.location = "login.php";
         }, 2000);
     </script>';
-  exit; // Asegura que no se procese más código PHP
+  exit;
 }
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -115,8 +111,6 @@ if ($_SESSION["ID_USUARIO"] === null) {
       </svg>
     </div>
 
-        
-
     <div class="container">
         <div class="titulo">
           <p>Listado de Fallas</p>
@@ -133,31 +127,12 @@ if ($_SESSION["ID_USUARIO"] === null) {
                         <table class="table">
                             <thead>
                                 <tr class="head-exc">
-                                <th scope="col">Convocatoria</th>
-                                <th scope="col" style="width: 150px;">Beneficio</th>
-                                <th scope="col">Día</th>
+                                <th scope="col">ID Falla</th>
                                 <th scope="col" style="width: 175px;">Fecha</th>
                                 </tr>
                             </thead>
-                            <tbody class="table-group-divider">
-                                <tr>
-                                <td>Convocatoria 2024-1 ESTUDIANTES PREGRADO PRESENCIAL</td>
-                                <td>Almuerzos</td>
-                                <td>Lunes</td>
-                                <td>20/05/2024</td>
-                                </tr>
-                                <tr>
-                                <td>Convocatoria 2024-1 ESTUDIANTES PREGRADO PRESENCIAL</td>
-                                <td>Almuerzos</td>
-                                <td>Martes</td>
-                                <td>30/04/2024</td>
-                                </tr>
-                                <tr>
-                                <td>Convocatoria 2024-1 ESTUDIANTES PREGRADO PRESENCIAL</td>
-                                <td>Almuerzos</td>
-                                <td>Jueves</td>
-                                <td>18/04/2024</td>
-                                </tr>
+                            <tbody id="fallasRegistradas" class="table-group-divider">
+                                <!-- Las filas generadas por JavaScript se insertarán aquí -->
                             </tbody>
                             </table>
                         </div>
@@ -198,4 +173,5 @@ if ($_SESSION["ID_USUARIO"] === null) {
   <script src="js/menu.js"></script>
   <script src="js/popper.min.js"></script>
   <script src="js/calificarAlmuerzo.js"></script>
+  <script src="js/fallas.js"></script> <!-- Nuevo script para manejar fallas -->
 </body>
