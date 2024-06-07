@@ -358,8 +358,6 @@ CREATE TABLE `falla_dia_almuerzo` (
 
 INSERT INTO `falla_dia_almuerzo` (`ID_falla_dia_almuerzo`, `ID_dia`, `ID_user`, `ID_falla`) VALUES
 (1, 2, 1, 1);
-INSERT INTO `falla_dia_almuerzo` (`ID_falla_dia_almuerzo`, `ID_dia`, `ID_user`, `ID_falla`) VALUES
-(2, 3, 1, 2);
 
 -- --------------------------------------------------------
 
