@@ -31,6 +31,8 @@ if ($_SESSION["ID_USUARIO"] === null) {
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <link href="css/excusas.css" rel="stylesheet" />
+  <script src="./js/excusas.js" defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body id="page-top">
@@ -56,6 +58,8 @@ if ($_SESSION["ID_USUARIO"] === null) {
                 <a href="fila-virtual.php" class="dropdown-item">Fila virtual</a>
                 <a href="donaciones.php" class="dropdown-item">Donaciones</a>
                 <a href="#"  class="dropdown-item btnAbrirModal">Calificaciones</a>
+                <a href="excusas.php" class="dropdown-item">Mis excusas</a>
+                <a href="fallas.php" class="dropdown-item">Mis fallas</a>
               </div>
             </li>
             <li class="items"><a href="#">Contact us</a></li>
@@ -119,9 +123,58 @@ if ($_SESSION["ID_USUARIO"] === null) {
         <div class="titulo">
           <p>Listado de Excusas</p>
         </div>
+        
+        <!-- Botón para abrir el modal -->
+
         <div class="container-button">
-            <button class="btn btn-primary" type="submit">Agregar Excusa</button>
+    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addExcuseModal">Agregar Excusa</button>
+  </div>
+            <!-- Modal -->
+      <div class="modal fade" id="addExcuseModal" tabindex="-1" aria-labelledby="addExcuseModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addExcuseModalLabel">Agregar Excusa</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="addExcuseForm" method="POST" action="add_excuse.php">
+                <div class="form-group">
+                  <label for="convocatoria">Convocatoria</label>
+                  <select class="form-control" id="convocatoria" name="convocatoria" required>
+                    <option value="Convocatoria 2024-1 ESTUDIANTES PREGRADO PRESENCIAL">Convocatoria 2024-1 ESTUDIANTES PREGRADO PRESENCIAL</option>
+                    <!-- Puedes añadir más opciones aquí si es necesario -->
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="beneficio">Beneficio</label>
+                  <select class="form-control" id="beneficio" name="beneficio" required>
+                    <option value="Almuerzos">Almuerzos</option>
+                    <!-- Puedes añadir más opciones aquí si es necesario -->
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="descripcion">Descripción</label>
+                  <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="fecha">Fecha de excusa</label>
+                  <input type="date" class="form-control" id="fecha" name="fecha" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar Excusa</button>
+              </form>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- Agregar referencias a jQuery y Bootstrap JS -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+
         <section class="container_cards_d">
           <div class="card">
             <div class="card-body">
@@ -131,37 +184,20 @@ if ($_SESSION["ID_USUARIO"] === null) {
                     <div class="card-body">
                       <div class="row align-items-center">
                         <div class="table-responsive px-3">
-                        <table class="table">
+                          <table class="table">
                             <thead>
-                                <tr class="head-exc">
+                              <tr class="head-exc">
                                 <th scope="col">Convocatoria</th>
                                 <th scope="col">Beneficio</th>
                                 <th scope="col">Descripción</th>
                                 <th scope="col" style="width: 175px;">Fecha de excusa</th>
-                                </tr>
+                              </tr>
                             </thead>
-                            <tbody class="table-group-divider">
-                                <tr>
-                                <td>Convocatoria 2024-1 ESTUDIANTES PREGRADO PRESENCIAL</td>
-                                <td>Almuerzos</td>
-                                <td>Viaje urgente por enfermedad grave de un familiar cercano, adjunto carta de hospitalización.</td>
-                                <td style="text-align: center;">22/05/2024</td>
-                                </tr>
-                                <tr>
-                                <td>Convocatoria 2024-1 ESTUDIANTES PREGRADO PRESENCIAL</td>
-                                <td>Almuerzos</td>
-                                <td>Asistencia obligatoria a curso de capacitación certificado por la universidad, del 19/04/2024 al 05/05/2024.</td>
-                                <td style="text-align: center;">01/05/2024</td>
-                                </tr>
-                                <tr>
-                                <td>Convocatoria 2024-1 ESTUDIANTES PREGRADO PRESENCIAL</td>
-                                <td>Almuerzos</td>
-                                <td>Informe médico por cirugía programada el 15/05/2024, con reposo recomendado de dos semanas.</td>
-                                <td style="text-align: center;">11/04/2024</td>
-                                </tr>
-                            </tbody>
-                            </table>
-                        </div>
+                              <tbody id="excusasRegistradas" class="table-group-divider">
+                               
+                              </tbody>
+                          </table>
+                          </div>
                       </div>
                     </div>
                   </div>
@@ -190,13 +226,16 @@ if ($_SESSION["ID_USUARIO"] === null) {
     </div>
   </div>
 
-
+  
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-F1RTS0P1CD"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+ 
   <script src="js/menu.js"></script>
   <script src="js/popper.min.js"></script>
   <script src="js/calificarAlmuerzo.js"></script>
 </body>
+
+<

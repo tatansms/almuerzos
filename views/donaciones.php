@@ -53,6 +53,8 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                 <a href="fila-virtual.php" class="dropdown-item">Fila virtual</a>
                 <a href="donaciones.php" class="dropdown-item">Donaciones</a>
                 <a href="#"  class="dropdown-item btnAbrirModal">Calificaciones</a>
+                <a href="excusas.php" class="dropdown-item">Mis excusas</a>
+                <a href="fallas.php" class="dropdown-item">Mis fallas</a>
               </div>
             </li>
             <li class="items"><a href="#">Contact us</a></li>
