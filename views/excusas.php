@@ -11,9 +11,7 @@ if ($_SESSION["ID_USUARIO"] === null) {
   exit; // Asegura que no se procese más código PHP
 }
 
-
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 
